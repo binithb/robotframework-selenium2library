@@ -21,12 +21,17 @@ class _ElementKeywords(KeywordGroup):
 
     # Public, get element(s)
 
-    def get_webelements(self, locator):
-        """Returns list of WebElement objects matching locator.
+    def get_webelements(self, locator, text=None):
+        """Returns list of WebElement objects matching ``locator`` and optionally, ``text``
 
         See `introduction` for details about locating elements.
         """
-        return self._element_find(locator, False, True)
+        elements = self._element_find(locator, False, True)
+        if text:
+            elements_with_text = filter(None, [element if element.text == text else None for element in elements])
+            elements = elements_with_text
+        return elements
+
 
     # Public, element lookups
 
